@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="apidez.com.week8.viewmodel.ViewModel"/>
+        <variable name="viewModel" type="ViewModel"/>
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        tools:context="apidez.com.week8.activity.MainActivity">
+
+        <TextView
+            android:id="@+id/tvContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:padding="16dp"
+            android:textSize="32sp"
+            android:text="@{String.valueOf(viewModel.value)}"
+            tools:text="0" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvContent"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:padding="16dp"
+            android:text="Increase"
+            android:textSize="16sp" />
+    </RelativeLayout>
+</layout>
