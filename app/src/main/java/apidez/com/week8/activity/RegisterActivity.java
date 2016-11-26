@@ -2,7 +2,7 @@ package apidez.com.week8.activity;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.support.v7.app.AlertDialog;
 
 import javax.inject.Inject;
 
@@ -35,10 +35,10 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     protected void bindViewModel() {
-        viewModel.toast()
+        viewModel.message()
                 .takeUntil(stopEvent())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((value) -> showMessage(value));
+                .subscribe(this::showMessage);
     }
 
     @OnClick(R.id.btnRegister)
@@ -51,6 +51,10 @@ public class RegisterActivity extends BaseActivity {
     }
 
     private void showMessage(String value) {
-        Toast.makeText(this, value, Toast.LENGTH_SHORT).show();
+        new AlertDialog.Builder(this)
+                .setMessage(value)
+                .setPositiveButton(android.R.string.yes, (dialog, which) -> dialog.dismiss())
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 }

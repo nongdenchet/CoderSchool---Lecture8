@@ -27,15 +27,15 @@ public class RegisterViewModel {
     public ObservableField<String> passwordError = new ObservableField<>();
     public ObservableField<String> confirmError = new ObservableField<>();
     public ObservableBoolean registerBtnState = new ObservableBoolean(false);
-    private PublishSubject<String> toast = PublishSubject.create();
+    private PublishSubject<String> message = PublishSubject.create();
 
     @Inject
     public RegisterViewModel(@NonNull UserApi userApi) {
         this.userApi = userApi;
     }
 
-    public Observable<String> toast() {
-        return toast.asObservable();
+    public Observable<String> message() {
+        return message.asObservable();
     }
 
     public TextChange emailChange = value -> {
@@ -92,7 +92,7 @@ public class RegisterViewModel {
         return Observable.just(registerBtnState.get())
                 .filter(btnState -> btnState)
                 .flatMap((value) -> userApi.register(email, password))
-                .doOnNext(value -> toast.onNext(value))
-                .doOnError(throwable -> toast.onNext(throwable.getMessage()));
+                .doOnNext(value -> message.onNext(value))
+                .doOnError(throwable -> message.onNext(throwable.getMessage()));
     }
 }
