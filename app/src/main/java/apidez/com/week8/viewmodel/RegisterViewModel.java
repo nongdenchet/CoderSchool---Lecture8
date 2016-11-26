@@ -8,10 +8,10 @@ import javax.inject.Inject;
 
 import apidez.com.week8.api.UserApi;
 import apidez.com.week8.dependency.ActivityScope;
-import apidez.com.week8.utils.view.TextChange;
 import apidez.com.week8.utils.ValidateUtils;
+import apidez.com.week8.utils.view.TextChange;
 import rx.Observable;
-import rx.subjects.BehaviorSubject;
+import rx.subjects.PublishSubject;
 
 /**
  * Created by nongdenchet on 11/22/16.
@@ -27,11 +27,15 @@ public class RegisterViewModel {
     public ObservableField<String> passwordError = new ObservableField<>();
     public ObservableField<String> confirmError = new ObservableField<>();
     public ObservableBoolean registerBtnState = new ObservableBoolean(false);
-    public BehaviorSubject<String> toast = BehaviorSubject.create();
+    private PublishSubject<String> toast = PublishSubject.create();
 
     @Inject
     public RegisterViewModel(@NonNull UserApi userApi) {
         this.userApi = userApi;
+    }
+
+    public Observable<String> toast() {
+        return toast.asObservable();
     }
 
     public TextChange emailChange = value -> {

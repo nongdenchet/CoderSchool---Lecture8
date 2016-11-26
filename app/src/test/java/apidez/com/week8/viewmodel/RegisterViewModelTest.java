@@ -138,7 +138,7 @@ public class RegisterViewModelTest {
     public void toast_confirmNotMatch_noEffect() {
         viewModel.emailChange.onChange("email@gm.co");
         viewModel.passwordChange.onChange("12345678");
-        viewModel.toast.subscribe(testSubscriber);
+        viewModel.toast().subscribe(testSubscriber);
         when(userApi.register("email@gm.co", "12345678"))
                 .thenReturn(Observable.just("Success"));
         viewModel.register().toBlocking().subscribe();
@@ -150,7 +150,7 @@ public class RegisterViewModelTest {
         viewModel.emailChange.onChange("email@gm.co");
         viewModel.passwordChange.onChange("12345678");
         viewModel.confirmChange.onChange("12345678");
-        viewModel.toast.subscribe(testSubscriber);
+        viewModel.toast().subscribe(testSubscriber);
         when(userApi.register("email@gm.co", "12345678"))
                 .thenReturn(Observable.just("Success"));
         viewModel.register().toBlocking().subscribe();
@@ -162,7 +162,7 @@ public class RegisterViewModelTest {
         viewModel.emailChange.onChange("email@gm.co");
         viewModel.passwordChange.onChange("12345678");
         viewModel.confirmChange.onChange("12345678");
-        viewModel.toast.subscribe(testSubscriber);
+        viewModel.toast().subscribe(testSubscriber);
         when(userApi.register("email@gm.co", "12345678"))
                 .thenReturn(Observable.error(new Throwable("Error")));
         viewModel.register().toBlocking().subscribe(value -> {}, throwable -> {});
