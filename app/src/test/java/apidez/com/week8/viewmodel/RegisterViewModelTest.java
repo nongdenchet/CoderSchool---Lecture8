@@ -56,12 +56,12 @@ public class RegisterViewModelTest {
     }
 
     @Test
-    public void emailError_init_showInvalidEmail() {
+    public void emailError_init_notShowError() {
         assertNull(viewModel.emailError.get());
     }
 
     @Test
-    public void passwordError_shortPassword_showShortPassword() {
+    public void passwordError_shortPassword_showError() {
         viewModel.passwordChange.onChange("abc");
         assertEquals("Password is too short", viewModel.passwordError.get());
     }
@@ -72,7 +72,7 @@ public class RegisterViewModelTest {
     }
 
     @Test
-    public void passwordError_shortPasswordAndConfirm_showShortPassword() {
+    public void passwordError_shortPasswordWithConfirm_showError() {
         viewModel.passwordChange.onChange("abc");
         viewModel.confirmChange.onChange("ab123456789c");
         assertEquals("Password is too short", viewModel.passwordError.get());
@@ -109,6 +109,13 @@ public class RegisterViewModelTest {
     }
 
     @Test
+    public void btnState_confirmNotMatch_disable() {
+        viewModel.passwordChange.onChange("12345678");
+        viewModel.confirmChange.onChange("abc");
+        assertFalse(viewModel.registerBtnState.get());
+    }
+
+    @Test
     public void btnState_passwordAndConfirmEmpty_disable() {
         viewModel.emailChange.onChange("fpt@gmail.com");
         assertFalse(viewModel.registerBtnState.get());
@@ -119,13 +126,6 @@ public class RegisterViewModelTest {
         viewModel.passwordChange.onChange("12345678");
         viewModel.confirmChange.onChange("12345678");
         assertNull(viewModel.confirmError.get());
-    }
-
-    @Test
-    public void btnState_confirmNotMatch_disable() {
-        viewModel.passwordChange.onChange("12345678");
-        viewModel.confirmChange.onChange("abc");
-        assertFalse(viewModel.registerBtnState.get());
     }
 
     @Test

@@ -11,7 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
-        <activity android:name=".activity.RegisterActivity">
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:label="Register">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
