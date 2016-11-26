@@ -2,7 +2,7 @@ package apidez.com.week8.activity;
 
 
 import android.support.test.espresso.ViewInteraction;
-import android.support.test.filters.LargeTest;
+import android.support.test.filters.MediumTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.widget.LinearLayout;
@@ -28,7 +28,7 @@ import static apidez.com.week8.utils.EspressoUtils.childAtPosition;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.not;
 
-@LargeTest
+@MediumTest
 @RunWith(AndroidJUnit4.class)
 public class RegisterActivityTest {
 
