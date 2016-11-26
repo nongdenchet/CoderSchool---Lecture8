@@ -12,7 +12,7 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "apidez.com.week8.MyRunner"
     }
     dataBinding {
         enabled true
@@ -43,9 +43,12 @@ dependencies {
 
     // Unit test
     testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:2.0.57-beta'
+    testCompile 'org.mockito:mockito-core:1.10.19'
 
     // Android test
+    androidTestCompile 'com.google.dexmaker:dexmaker:1.2'
+    androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.2'
+    androidTestCompile 'org.mockito:mockito-core:1.10.19'
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })

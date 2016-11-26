@@ -6,6 +6,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import apidez.com.week8.api.UserApi;
+import apidez.com.week8.validator.RegisterValidator;
 import rx.Observable;
 import rx.observers.TestSubscriber;
 
@@ -27,7 +28,7 @@ public class RegisterViewModelTest {
     @Before
     public void init() {
         MockitoAnnotations.initMocks(this);
-        viewModel = new RegisterViewModel(userApi);
+        viewModel = new RegisterViewModel(userApi, new RegisterValidator());
     }
 
     @Test

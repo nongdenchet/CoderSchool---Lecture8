@@ -1,7 +1,6 @@
 package apidez.com.week8.dependency.module;
 
-import apidez.com.week8.api.FakeUserApiImpl;
-import apidez.com.week8.api.UserApi;
+import apidez.com.week8.validator.RegisterValidator;
 import dagger.Module;
 import dagger.Provides;
 
@@ -13,7 +12,7 @@ import dagger.Provides;
 public class UserModule {
 
     @Provides
-    public UserApi provideUserApi() {
-        return new FakeUserApiImpl();
+    public RegisterValidator provideRegisterValidator() {
+        return new RegisterValidator();
     }
 }

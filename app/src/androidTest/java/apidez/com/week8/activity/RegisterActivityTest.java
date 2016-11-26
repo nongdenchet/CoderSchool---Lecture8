@@ -12,7 +12,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import apidez.com.week8.EspressoApplication;
 import apidez.com.week8.R;
+import apidez.com.week8.api.UserApi;
+import rx.Observable;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -27,13 +30,14 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static apidez.com.week8.utils.EspressoUtils.childAtPosition;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.not;
+import static org.mockito.Mockito.when;
 
 @MediumTest
 @RunWith(AndroidJUnit4.class)
 public class RegisterActivityTest {
 
     @Rule
-    public ActivityTestRule<RegisterActivity> mActivityTestRule =
+    public ActivityTestRule<RegisterActivity> activityTestRule =
             new ActivityTestRule<>(RegisterActivity.class);
 
     @Test
@@ -63,6 +67,8 @@ public class RegisterActivityTest {
 
     @Test
     public void registerSuccess() {
+        when(userApi().register("android@gmail.com", "12345678"))
+                .thenReturn(Observable.just("Success"));
         edtEmail().perform(typeText("android@gmail.com"), closeSoftKeyboard());
         edtPassword().perform(replaceText("12345678"), closeSoftKeyboard());
         edtConfirm().perform(replaceText("12345678"), closeSoftKeyboard());
@@ -72,11 +78,13 @@ public class RegisterActivityTest {
 
     @Test
     public void registerFail() {
-        edtEmail().perform(typeText("fpt@gmail.com"), closeSoftKeyboard());
+        when(userApi().register("cs@gmail.com", "12345678"))
+                .thenReturn(Observable.error(new Throwable("Error")));
+        edtEmail().perform(typeText("cs@gmail.com"), closeSoftKeyboard());
         edtPassword().perform(replaceText("12345678"), closeSoftKeyboard());
         edtConfirm().perform(replaceText("12345678"), closeSoftKeyboard());
         registerBtn().perform(click());
-        checkMessage("Email has been used");
+        checkMessage("Error");
     }
 
     private void checkMessage(String message) {
@@ -100,6 +108,10 @@ public class RegisterActivityTest {
                 withParent(allOf(withId(R.id.activity_register),
                         withParent(withId(android.R.id.content)))),
                 isDisplayed()));
+    }
+
+    private UserApi userApi() {
+        return EspressoApplication.get(activityTestRule).userApi;
     }
 
     private ViewInteraction edtEmail() {

@@ -8,8 +8,8 @@ import javax.inject.Inject;
 
 import apidez.com.week8.api.UserApi;
 import apidez.com.week8.dependency.ActivityScope;
-import apidez.com.week8.utils.ValidateUtils;
 import apidez.com.week8.utils.view.TextChange;
+import apidez.com.week8.validator.RegisterValidator;
 import rx.Observable;
 import rx.subjects.PublishSubject;
 
@@ -20,6 +20,8 @@ import rx.subjects.PublishSubject;
 @ActivityScope
 public class RegisterViewModel {
     private UserApi userApi;
+    private RegisterValidator validator;
+
     private String email = "";
     private String password = "";
     private String confirm = "";
@@ -30,8 +32,9 @@ public class RegisterViewModel {
     private PublishSubject<String> message = PublishSubject.create();
 
     @Inject
-    public RegisterViewModel(@NonNull UserApi userApi) {
+    public RegisterViewModel(@NonNull UserApi userApi, @NonNull RegisterValidator validator) {
         this.userApi = userApi;
+        this.validator = validator;
     }
 
     public Observable<String> message() {
@@ -56,7 +59,7 @@ public class RegisterViewModel {
     private void validatePassword() {
         passwordError.set(null);
         confirmError.set(null);
-        if (!ValidateUtils.validatePassword(password)) {
+        if (!validator.validatePassword(password)) {
             passwordError.set("Password is too short");
         } else if (!confirm.equals(password)) {
             confirmError.set("Password and confirm not match");
@@ -66,7 +69,7 @@ public class RegisterViewModel {
 
     private void validateEmail() {
         emailError.set(null);
-        if (!ValidateUtils.validateEmail(email)) {
+        if (!validator.validateEmail(email)) {
             emailError.set("Invalid email");
         }
         updateBtnState();

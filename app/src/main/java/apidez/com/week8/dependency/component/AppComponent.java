@@ -2,6 +2,7 @@ package apidez.com.week8.dependency.component;
 
 import javax.inject.Singleton;
 
+import apidez.com.week8.dependency.module.ApiModule;
 import apidez.com.week8.dependency.module.AppModule;
 import apidez.com.week8.dependency.module.UserModule;
 import dagger.Component;
@@ -11,7 +12,7 @@ import dagger.Component;
  */
 
 @Singleton
-@Component(modules = {AppModule.class})
+@Component(modules = {AppModule.class, ApiModule.class})
 public interface AppComponent {
     UserComponent plus(UserModule userModule);
 }
