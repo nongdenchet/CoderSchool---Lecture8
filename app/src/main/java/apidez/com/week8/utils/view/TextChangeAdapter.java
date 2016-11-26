@@ -1,4 +1,4 @@
-package apidez.com.week8.utils;
+package apidez.com.week8.utils.view;
 
 import android.text.Editable;
 import android.text.TextWatcher;

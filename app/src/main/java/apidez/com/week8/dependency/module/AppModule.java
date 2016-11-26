@@ -4,8 +4,6 @@ import android.content.Context;
 
 import javax.inject.Singleton;
 
-import apidez.com.week8.utils.Api;
-import apidez.com.week8.utils.Data;
 import dagger.Module;
 import dagger.Provides;
 
@@ -25,16 +23,5 @@ public class AppModule {
     @Provides
     public Context provideContext() {
         return context;
-    }
-
-    @Provides
-    public Api provideApi() {
-        return new Api();
-    }
-
-    @Provides
-    @Singleton
-    public Data provideData(Api api) {
-        return new Data(api);
     }
 }

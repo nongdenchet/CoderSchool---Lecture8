@@ -3,6 +3,9 @@ package apidez.com.week8.utils;
 import android.databinding.BindingAdapter;
 import android.widget.EditText;
 
+import apidez.com.week8.utils.view.TextChange;
+import apidez.com.week8.utils.view.TextChangeAdapter;
+
 /**
  * Created by nongdenchet on 11/22/16.
  */

@@ -2,9 +2,13 @@ package apidez.com.week8.viewmodel;
 
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
+import android.support.annotation.NonNull;
+
+import javax.inject.Inject;
 
 import apidez.com.week8.api.UserApi;
-import apidez.com.week8.utils.TextChange;
+import apidez.com.week8.dependency.ActivityScope;
+import apidez.com.week8.utils.view.TextChange;
 import apidez.com.week8.utils.ValidateUtils;
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
@@ -13,6 +17,7 @@ import rx.subjects.BehaviorSubject;
  * Created by nongdenchet on 11/22/16.
  */
 
+@ActivityScope
 public class RegisterViewModel {
     private UserApi userApi;
     private String email = "";
@@ -24,7 +29,8 @@ public class RegisterViewModel {
     public ObservableBoolean registerBtnState = new ObservableBoolean(false);
     public BehaviorSubject<String> toast = BehaviorSubject.create();
 
-    public RegisterViewModel(UserApi userApi) {
+    @Inject
+    public RegisterViewModel(@NonNull UserApi userApi) {
         this.userApi = userApi;
     }
 
