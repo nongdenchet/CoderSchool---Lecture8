@@ -14,7 +14,7 @@ import org.junit.runner.RunWith;
 
 import apidez.com.week8.EspressoApplication;
 import apidez.com.week8.R;
-import apidez.com.week8.api.UserApi;
+import apidez.com.week8.data.repo.UserRepo;
 import rx.Observable;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -110,8 +110,8 @@ public class RegisterActivityTest {
                 isDisplayed()));
     }
 
-    private UserApi userApi() {
-        return EspressoApplication.get(activityTestRule).userApi;
+    private UserRepo userApi() {
+        return EspressoApplication.get(activityTestRule).userRepo;
     }
 
     private ViewInteraction edtEmail() {

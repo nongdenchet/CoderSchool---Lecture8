@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 
 import javax.inject.Inject;
 
-import apidez.com.week8.api.UserApi;
+import apidez.com.week8.data.repo.UserRepo;
 import apidez.com.week8.dependency.ActivityScope;
 import apidez.com.week8.utils.view.TextChange;
 import apidez.com.week8.validator.RegisterValidator;
@@ -19,7 +19,7 @@ import rx.subjects.PublishSubject;
 
 @ActivityScope
 public class RegisterViewModel {
-    private UserApi userApi;
+    private UserRepo userRepo;
     private RegisterValidator validator;
 
     private String email = "";
@@ -32,8 +32,8 @@ public class RegisterViewModel {
     private PublishSubject<String> message = PublishSubject.create();
 
     @Inject
-    public RegisterViewModel(@NonNull UserApi userApi, @NonNull RegisterValidator validator) {
-        this.userApi = userApi;
+    public RegisterViewModel(@NonNull UserRepo userRepo, @NonNull RegisterValidator validator) {
+        this.userRepo = userRepo;
         this.validator = validator;
     }
 
@@ -94,7 +94,7 @@ public class RegisterViewModel {
     public Observable<String> register() {
         return Observable.just(registerBtnState.get())
                 .filter(btnState -> btnState)
-                .flatMap((value) -> userApi.register(email, password))
+                .flatMap((value) -> userRepo.register(email, password))
                 .doOnNext(value -> message.onNext(value))
                 .doOnError(throwable -> message.onNext(throwable.getMessage()));
     }

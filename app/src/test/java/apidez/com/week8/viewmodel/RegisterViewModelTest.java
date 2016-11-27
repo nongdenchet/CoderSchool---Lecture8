@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import apidez.com.week8.api.UserApi;
+import apidez.com.week8.data.repo.UserRepo;
 import apidez.com.week8.validator.RegisterValidator;
 import rx.Observable;
 import rx.observers.TestSubscriber;
@@ -23,12 +23,12 @@ public class RegisterViewModelTest {
     private TestSubscriber<String> testSubscriber = TestSubscriber.create();
 
     @Mock
-    UserApi userApi;
+    UserRepo userRepo;
 
     @Before
     public void init() {
         MockitoAnnotations.initMocks(this);
-        viewModel = new RegisterViewModel(userApi, new RegisterValidator());
+        viewModel = new RegisterViewModel(userRepo, new RegisterValidator());
     }
 
     @Test
@@ -140,7 +140,7 @@ public class RegisterViewModelTest {
         viewModel.emailChange.onChange("email@gm.co");
         viewModel.passwordChange.onChange("12345678");
         viewModel.message().subscribe(testSubscriber);
-        when(userApi.register("email@gm.co", "12345678"))
+        when(userRepo.register("email@gm.co", "12345678"))
                 .thenReturn(Observable.just("Success"));
         viewModel.register().toBlocking().subscribe();
         testSubscriber.assertNoValues();
@@ -152,7 +152,7 @@ public class RegisterViewModelTest {
         viewModel.passwordChange.onChange("12345678");
         viewModel.confirmChange.onChange("12345678");
         viewModel.message().subscribe(testSubscriber);
-        when(userApi.register("email@gm.co", "12345678"))
+        when(userRepo.register("email@gm.co", "12345678"))
                 .thenReturn(Observable.just("Success"));
         viewModel.register().toBlocking().subscribe();
         testSubscriber.assertValue("Success");
@@ -164,7 +164,7 @@ public class RegisterViewModelTest {
         viewModel.passwordChange.onChange("12345678");
         viewModel.confirmChange.onChange("12345678");
         viewModel.message().subscribe(testSubscriber);
-        when(userApi.register("email@gm.co", "12345678"))
+        when(userRepo.register("email@gm.co", "12345678"))
                 .thenReturn(Observable.error(new Throwable("Error")));
         viewModel.register().toBlocking().subscribe(value -> {}, throwable -> {});
         testSubscriber.assertValue("Error");

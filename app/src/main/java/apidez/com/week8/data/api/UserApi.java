@@ -1,4 +1,6 @@
-package apidez.com.week8.api;
+package apidez.com.week8.data.api;
+
+import javax.inject.Inject;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -7,7 +9,11 @@ import rx.Subscriber;
  * Created by nongdenchet on 11/25/16.
  */
 
-public class FakeUserApiImpl implements UserApi {
+public class UserApi {
+
+    @Inject
+    public UserApi() {
+    }
 
     public Observable<String> register(final String email, String password) {
         return Observable.create(new Observable.OnSubscribe<String>() {
