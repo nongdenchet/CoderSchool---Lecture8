@@ -18,7 +18,6 @@ import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-@SuppressWarnings("FieldCanBeLocal")
 public class RegisterActivity extends BaseActivity {
 
     @BindView(R.id.edtEmail) EditText edtEmail;
@@ -28,6 +27,7 @@ public class RegisterActivity extends BaseActivity {
     @BindView(R.id.inputConfirm) TextInputLayout inputConfirm;
     @BindView(R.id.inputPassword) TextInputLayout inputPassword;
     @BindView(R.id.btnRegister) Button btnRegister;
+
     @Inject RegisterViewModel viewModel;
 
     @Override
