@@ -32,7 +32,7 @@ public class RegisterViewModel {
     private PublishSubject<String> message = PublishSubject.create();
 
     @Inject
-    public RegisterViewModel(@NonNull UserRepo userRepo, @NonNull RegisterValidator validator) {
+    RegisterViewModel(@NonNull UserRepo userRepo, @NonNull RegisterValidator validator) {
         this.userRepo = userRepo;
         this.validator = validator;
     }

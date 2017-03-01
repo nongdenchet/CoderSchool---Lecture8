@@ -1,35 +1,40 @@
 package apidez.com.week8.activity;
 
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
+import android.widget.Button;
+import android.widget.EditText;
 
 import javax.inject.Inject;
 
 import apidez.com.week8.R;
-import apidez.com.week8.databinding.ActivityRegisterBinding;
-import apidez.com.week8.dependency.component.UserComponent;
 import apidez.com.week8.dependency.module.UserModule;
+import apidez.com.week8.utils.BindingUtils;
 import apidez.com.week8.viewmodel.RegisterViewModel;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class RegisterActivity extends BaseActivity {
-    private ActivityRegisterBinding binding;
-    private UserComponent userComponent;
 
-    @Inject
-    RegisterViewModel viewModel;
+    @BindView(R.id.edtEmail) EditText edtEmail;
+    @BindView(R.id.edtPassword) EditText edtPassword;
+    @BindView(R.id.edtConfirm) EditText edtConfirm;
+    @BindView(R.id.inputEmail) TextInputLayout inputEmail;
+    @BindView(R.id.inputConfirm) TextInputLayout inputConfirm;
+    @BindView(R.id.inputPassword) TextInputLayout inputPassword;
+    @BindView(R.id.btnRegister) Button btnRegister;
+    @Inject RegisterViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        userComponent = getAppComponent().plus(new UserModule());
-        userComponent.inject(this);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_register);
-        binding.setViewModel(viewModel);
+        getAppComponent().plus(new UserModule()).inject(this);
+        setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
     }
 
@@ -39,6 +44,13 @@ public class RegisterActivity extends BaseActivity {
                 .takeUntil(stopEvent())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::showMessage);
+        BindingUtils.bindEnable(btnRegister, viewModel.registerBtnState);
+        BindingUtils.textChange(edtEmail, viewModel.emailChange);
+        BindingUtils.textChange(edtPassword, viewModel.passwordChange);
+        BindingUtils.textChange(edtConfirm, viewModel.confirmChange);
+        BindingUtils.bindError(inputEmail, viewModel.emailError);
+        BindingUtils.bindError(inputPassword, viewModel.passwordError);
+        BindingUtils.bindError(inputConfirm, viewModel.confirmError);
     }
 
     @OnClick(R.id.btnRegister)

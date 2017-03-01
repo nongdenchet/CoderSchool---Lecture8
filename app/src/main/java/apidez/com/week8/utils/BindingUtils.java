@@ -1,6 +1,11 @@
 package apidez.com.week8.utils;
 
 import android.databinding.BindingAdapter;
+import android.databinding.Observable;
+import android.databinding.ObservableBoolean;
+import android.databinding.ObservableField;
+import android.support.design.widget.TextInputLayout;
+import android.view.View;
 import android.widget.EditText;
 
 import apidez.com.week8.utils.view.TextChange;
@@ -18,6 +23,24 @@ public class BindingUtils {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 textChange.onChange(charSequence.toString());
+            }
+        });
+    }
+
+    public static void bindEnable(View view, final ObservableBoolean observableBoolean) {
+        observableBoolean.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable observable, int i) {
+                view.setEnabled(observableBoolean.get());
+            }
+        });
+    }
+
+    public static void bindError(TextInputLayout inputLayout, final ObservableField<String> error) {
+        error.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable observable, int i) {
+                inputLayout.setError(error.get());
             }
         });
     }
