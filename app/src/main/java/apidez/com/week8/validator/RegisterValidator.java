@@ -15,9 +15,8 @@ public class RegisterValidator {
         return validEmail(email) ? null : "Invalid email";
     }
 
-    private boolean validEmail(String emailStr) {
-        if (emailStr == null) return false;
-        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
+    private boolean validEmail(String email) {
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
         return matcher.find();
     }
 
