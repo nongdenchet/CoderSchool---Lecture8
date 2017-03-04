@@ -21,18 +21,17 @@ import rx.subjects.PublishSubject;
 public class RegisterViewModel {
     private UserRepo userRepo;
     private RegisterValidator validator;
-
     private String email = "";
     private String password = "";
     private String confirm = "";
+    private PublishSubject<String> message = PublishSubject.create();
     public ObservableField<String> emailError = new ObservableField<>();
     public ObservableField<String> passwordError = new ObservableField<>();
     public ObservableField<String> confirmError = new ObservableField<>();
-    public ObservableBoolean registerBtnState = new ObservableBoolean(false);
-    private PublishSubject<String> message = PublishSubject.create();
+    public ObservableBoolean isValid = new ObservableBoolean(false);
 
     @Inject
-    public RegisterViewModel(@NonNull UserRepo userRepo, @NonNull RegisterValidator validator) {
+    RegisterViewModel(@NonNull UserRepo userRepo, @NonNull RegisterValidator validator) {
         this.userRepo = userRepo;
         this.validator = validator;
     }
@@ -43,40 +42,24 @@ public class RegisterViewModel {
 
     public TextChange emailChange = value -> {
         email = value;
-        validateEmail();
+        emailError.set(validator.validateEmail(email));
+        updateBtnState();
     };
 
     public TextChange passwordChange = value -> {
         password = value;
-        validatePassword();
+        passwordError.set(validator.validatePassword(password));
+        updateBtnState();
     };
 
     public TextChange confirmChange = value -> {
         confirm = value;
-        validatePassword();
+        confirmError.set(validator.validateConfirm(password, confirm));
+        updateBtnState();
     };
 
-    private void validatePassword() {
-        passwordError.set(null);
-        confirmError.set(null);
-        if (!validator.validatePassword(password)) {
-            passwordError.set("Password is too short");
-        } else if (!confirm.equals(password)) {
-            confirmError.set("Password and confirm not match");
-        }
-        updateBtnState();
-    }
-
-    private void validateEmail() {
-        emailError.set(null);
-        if (!validator.validateEmail(email)) {
-            emailError.set("Invalid email");
-        }
-        updateBtnState();
-    }
-
     private void updateBtnState() {
-        registerBtnState.set(!hasEmptyData() && !hasError());
+        isValid.set(!hasEmptyData() && !hasError());
     }
 
     private boolean hasEmptyData() {
@@ -92,7 +75,7 @@ public class RegisterViewModel {
     }
 
     public Observable<String> register() {
-        return Observable.just(registerBtnState.get())
+        return Observable.just(isValid.get())
                 .filter(btnState -> btnState)
                 .flatMap((value) -> userRepo.register(email, password))
                 .doOnNext(value -> message.onNext(value))

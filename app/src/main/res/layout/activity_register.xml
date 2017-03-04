@@ -4,12 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <import type="apidez.com.week8.viewmodel.RegisterViewModel" />
-
-        <variable
-            name="viewModel"
-            type="RegisterViewModel" />
+        <variable name="viewModel" type="RegisterViewModel" />
     </data>
 
     <LinearLayout
@@ -73,7 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:enabled="@{viewModel.registerBtnState}"
+            android:enabled="@{viewModel.isValid}"
             android:padding="16dp"
             android:text="Register" />
     </LinearLayout>

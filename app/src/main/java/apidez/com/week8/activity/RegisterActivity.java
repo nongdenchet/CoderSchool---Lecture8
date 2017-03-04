@@ -16,6 +16,7 @@ import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class RegisterActivity extends BaseActivity {
     private ActivityRegisterBinding binding;
     private UserComponent userComponent;

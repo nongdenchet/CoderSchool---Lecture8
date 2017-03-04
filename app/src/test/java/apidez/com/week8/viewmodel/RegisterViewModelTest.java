@@ -85,41 +85,41 @@ public class RegisterViewModelTest {
     }
 
     @Test
-    public void confirmError_notMatch_showError() {
+    public void confirmError_validPassword_notShowError() {
         viewModel.passwordChange.onChange("12345678");
-        assertEquals("Password and confirm not match", viewModel.confirmError.get());
+        assertEquals(null, viewModel.confirmError.get());
     }
 
     @Test
     public void btnState_init_disable() {
-        assertFalse(viewModel.registerBtnState.get());
+        assertFalse(viewModel.isValid.get());
     }
 
     @Test
     public void btnState_emailInvalid_disable() {
-        viewModel.registerBtnState.set(true);
+        viewModel.isValid.set(true);
         viewModel.emailChange.onChange("invalid");
-        assertFalse(viewModel.registerBtnState.get());
+        assertFalse(viewModel.isValid.get());
     }
 
     @Test
     public void btnState_passwordInvalid_disable() {
-        viewModel.registerBtnState.set(true);
+        viewModel.isValid.set(true);
         viewModel.passwordChange.onChange("abc");
-        assertFalse(viewModel.registerBtnState.get());
+        assertFalse(viewModel.isValid.get());
     }
 
     @Test
     public void btnState_confirmNotMatch_disable() {
         viewModel.passwordChange.onChange("12345678");
         viewModel.confirmChange.onChange("abc");
-        assertFalse(viewModel.registerBtnState.get());
+        assertFalse(viewModel.isValid.get());
     }
 
     @Test
     public void btnState_passwordAndConfirmEmpty_disable() {
         viewModel.emailChange.onChange("fpt@gmail.com");
-        assertFalse(viewModel.registerBtnState.get());
+        assertFalse(viewModel.isValid.get());
     }
 
     @Test
